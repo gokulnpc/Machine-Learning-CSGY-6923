@@ -46,7 +46,7 @@ def load_model(model_name):
         # Load pre-trained weights if available
         weight_path = f'checkpoints/{model_name.lower()}_best.pth'
         if os.path.exists(weight_path):
-            model.load_state_dict(torch.load(weight_path, map_location=torch.device('cpu')))
+            model.load_state_dict(torch.load(weight_path, map_location=torch.device('cpu'), weights_only=True))
         else:
             st.warning(f"No pre-trained weights found for the {model_name} model. Using randomly initialized weights.")
         
@@ -189,20 +189,20 @@ def main():
         for i, (model, time_val) in enumerate(processing_times.items()):
             with metric_cols[i]:
                 st.metric(f"{model} Processing Time", f"{time_val:.4f} seconds")
-        
+
         # Quality Metrics Section
         st.subheader("🔍 Image Quality Assessment")
         quality_cols = st.columns(len(model_names))
-        
+
         for i, (model, metrics) in enumerate(quality_metrics.items()):
             with quality_cols[i]:
                 st.metric(f"{model} PSNR", f"{metrics['PSNR']:.2f} dB")
                 st.metric(f"{model} SSIM", f"{metrics['SSIM']:.4f}")
-        
+
         # Download Section
         st.subheader("💾 Download Enhanced Images")
         download_cols = st.columns(len(model_names))
-        
+
         for i, (model, image) in enumerate(enhanced_images.items()):
             with download_cols[i]:
                 buffered = io.BytesIO()
