@@ -108,7 +108,7 @@ def train_model(model_name, train_loader, val_loader, device, num_epochs=100):
 
 def main():
     # Setup
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    device = torch.device('cpu')
     
     # Data paths
     train_hr_dir = 'data/DIV2K_train_HR/DIV2K_train_HR/'

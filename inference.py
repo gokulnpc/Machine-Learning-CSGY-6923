@@ -18,7 +18,7 @@ def load_model(model_name):
     else:
         model = EDSR()
     
-    model.load_state_dict(torch.load(f'checkpoints/{model_name.lower()}_best.pth'))
+    model.load_state_dict(torch.load(f'checkpoints/{model_name.lower()}_best.pth', map_location=torch.device('cpu')))
     model.eval()
     return model
 
